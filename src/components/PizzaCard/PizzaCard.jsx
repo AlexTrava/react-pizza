@@ -1,30 +1,51 @@
 import styles from "./PizzaCard.module.scss";
 import { useState } from "react";
+import uniqId from 'lodash.uniqueid';
 
-const PizzaCard = ({ pizzaName, price }) => {
+const PizzaCard = ({ pizzaName, price, img, size, types }) => {
+  const typesPizza = ["Тонкое", "Традиционное"];
   const [count, setCount] = useState(1);
+  const [typeActive, setTypeActive] = useState(null);
+  const [sizeActive, setSizeActive] = useState(null);
 
   const countHandler = () => {
     setCount(() => count + 1);
   };
 
+  const typeActiveHandler = (number) => {
+    setTypeActive(() => number);
+  };
+
+  const sizeActiveHandler = (number) => {
+    setSizeActive(() => number);
+  };
+
   return (
     <div className={styles.pizza_block}>
-      <img
-        className={styles.pizza_block__image}
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-        alt="Pizza"
-      />
+      <img className={styles.pizza_block__image} src={img} alt="Pizza" />
       <h4 className={styles.pizza_block__title}>{pizzaName}</h4>
       <div className={styles.pizza_block__selector}>
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {types.map((number) => (
+            <li
+              onClick={() => typeActiveHandler(number)}
+              className={typeActive === number ? styles.active : ""}
+              key={uniqId('type_')}
+            >
+              {typesPizza[number]}
+            </li>
+          ))}
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {size.map((item, index) => (
+            <li
+              onClick={() => sizeActiveHandler(index)}
+              className={sizeActive === index ? styles.active : ""}
+              key={uniqId('size_')}
+            >
+              {item} см.
+            </li>
+          ))}
         </ul>
       </div>
       <div className={styles.pizza_block__bottom}>

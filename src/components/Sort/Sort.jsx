@@ -1,6 +1,12 @@
 import styles from "./Sort.module.scss";
+import { useState } from "react";
+import uniqId from 'lodash.uniqueid';
 
 const Sort = () => {
+
+
+  const [isVisiblePopUp, setIsVisiblePopUp] = useState(true);
+
   return (
     <div className={styles.sort}>
       <div className="sort__label">
@@ -17,15 +23,16 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span onClick={() => setIsVisiblePopUp(() => !isVisiblePopUp)}>популярности</span>
       </div>
+      {isVisiblePopUp && (
       <div className={styles.sort__popup}>
         <ul>
           <li className={styles.active}>популярности</li>
           <li>цене</li>
           <li>алфавиту</li>
         </ul>
-      </div>
+      </div>)}
     </div>
   );
 };
