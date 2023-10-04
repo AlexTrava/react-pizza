@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./Categories.module.scss";
-import uniqId from 'lodash.uniqueid';
+import uniqId from "lodash.uniqueid";
 
 const Categories = () => {
   const categoriesArr = [
@@ -23,9 +23,10 @@ const Categories = () => {
         {categoriesArr.map((item, index) => (
           <li
             onClick={() => onClickCategory(index)}
-            key={uniqId('category_')}
+            key={uniqId("category_")}
             className={activeCategory === index ? styles.active : ""}
-          >{item}
+          >
+            {item}
           </li>
         ))}
       </ul>

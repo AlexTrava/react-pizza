@@ -1,6 +1,6 @@
 import styles from "./PizzaCard.module.scss";
 import { useState } from "react";
-import uniqId from 'lodash.uniqueid';
+import uniqId from "lodash.uniqueid";
 
 const PizzaCard = ({ pizzaName, price, img, size, types }) => {
   const typesPizza = ["Тонкое", "Традиционное"];
@@ -30,7 +30,7 @@ const PizzaCard = ({ pizzaName, price, img, size, types }) => {
             <li
               onClick={() => typeActiveHandler(number)}
               className={typeActive === number ? styles.active : ""}
-              key={uniqId('type_')}
+              key={uniqId("type_")}
             >
               {typesPizza[number]}
             </li>
@@ -41,7 +41,7 @@ const PizzaCard = ({ pizzaName, price, img, size, types }) => {
             <li
               onClick={() => sizeActiveHandler(index)}
               className={sizeActive === index ? styles.active : ""}
-              key={uniqId('size_')}
+              key={uniqId("size_")}
             >
               {item} см.
             </li>

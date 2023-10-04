@@ -1,11 +1,17 @@
 import styles from "./Sort.module.scss";
 import { useState } from "react";
-import uniqId from 'lodash.uniqueid';
+import uniqId from "lodash.uniqueid";
 
 const Sort = () => {
+  const listPop = ["Популярности", "Цене", "Алфавиту"];
+  const [isVisiblePopUp, setIsVisiblePopUp] = useState(false);
+  const [activePop, setActivePop] = useState(0);
+  let sortName = listPop[activePop];
 
-
-  const [isVisiblePopUp, setIsVisiblePopUp] = useState(true);
+  const onClickPop = (index) => {
+    setActivePop(() => index);
+    setIsVisiblePopUp(() => false);
+  };
 
   return (
     <div className={styles.sort}>
@@ -23,16 +29,25 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisiblePopUp(() => !isVisiblePopUp)}>популярности</span>
+        <span onClick={() => setIsVisiblePopUp(() => !isVisiblePopUp)}>
+          {sortName}
+        </span>
       </div>
       {isVisiblePopUp && (
-      <div className={styles.sort__popup}>
-        <ul>
-          <li className={styles.active}>популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>)}
+        <div className={styles.sort__popup}>
+          <ul>
+            {listPop.map((item, index) => (
+              <li
+                className={activePop === index ? styles.active : ""}
+                key={uniqId("list_pop_")}
+                onClick={() => onClickPop(index)}
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
