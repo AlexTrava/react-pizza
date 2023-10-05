@@ -11,20 +11,18 @@ import { useState, useEffect } from "react";
 const URL_ITEMS = "https://651e965944a3a8aa4768a0da.mockapi.io/items";
 
 function App() {
-  const [items, setItems] = useState(null);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const resp =  () => {
-       fetch(URL_ITEMS)
+    const resp = async () => {
+      await fetch(URL_ITEMS)
         .then((data) => data.json())
-        .then((data2) => setItems(data2))
+        .then((item) => setItems(item))
         .catch((e) => console.log(e));
     };
     resp();
   }, []);
-
-  console.log(items, "its items");
-
+  console.log(items, "render");
   return (
     <div className="wrapper">
       <Header />
@@ -46,7 +44,6 @@ function App() {
                 key={uniqId("card_")}
               />
             ))}
-            ;
           </div>
         </div>
       </div>
