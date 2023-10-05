@@ -67,7 +67,7 @@ const PizzaCard = ({ pizzaName, price, img, size, types }) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>{count}</i>
+          <i> {count}</i>
         </div>
       </div>
     </div>

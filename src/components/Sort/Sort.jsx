@@ -8,6 +8,7 @@ const Sort = () => {
   const [activePop, setActivePop] = useState(0);
   let sortName = listPop[activePop];
 
+
   const onClickPop = (index) => {
     setActivePop(() => index);
     setIsVisiblePopUp(() => false);
