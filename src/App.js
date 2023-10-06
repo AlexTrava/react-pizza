@@ -7,24 +7,27 @@ import uniqId from "lodash.uniqueid";
 // import axios from "axios";
 import { useState, useEffect } from "react";
 // import pizzas from "./pizza.json";
+import Skeleton from "./components/Skeleton/Skeleton";
 
 const URL_ITEMS = "https://651e965944a3a8aa4768a0da.mockapi.io/items";
 
 function App() {
-  const [items, setItems] = useState(null);
+  const [items, setItems] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const resp =  () => {
-       fetch(URL_ITEMS)
+    const resp = () => {
+      fetch(URL_ITEMS)
         .then((data) => data.json())
-        .then((data2) => setItems(data2))
+        .then((data2) => {
+          setLoading(false)
+          setItems(data2)})
         .catch((e) => console.log(e));
     };
     resp();
   }, []);
 
-  console.log(items, "its items");
-
+  // console.log(items, "its items");
   return (
     <div className="wrapper">
       <Header />
@@ -36,17 +39,18 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            {items.map(({ id, title, price, imageUrl, sizes, types }) => (
-              <PizzaCard
-                pizzaName={title}
-                price={price}
-                img={imageUrl}
-                size={sizes}
-                types={types}
-                key={uniqId("card_")}
-              />
-            ))}
-            ;
+            {isLoading
+              ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
+              : items.map(({ id, title, price, imageUrl, sizes, types }) => (
+                  <PizzaCard
+                    pizzaName={title}
+                    price={price}
+                    img={imageUrl}
+                    size={sizes}
+                    types={types}
+                    key={uniqId("card_")}
+                  />
+                ))}
           </div>
         </div>
       </div>
