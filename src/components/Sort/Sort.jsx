@@ -8,7 +8,6 @@ const Sort = () => {
   const [activePop, setActivePop] = useState(0);
   let sortName = listPop[activePop];
 
-
   const onClickPop = (index) => {
     setActivePop(() => index);
     setIsVisiblePopUp(() => false);
@@ -16,7 +15,7 @@ const Sort = () => {
 
   return (
     <div className={styles.sort}>
-      <div className="sort__label">
+      <div className={styles.sort__label}>
         <svg
           width="10"
           height="6"

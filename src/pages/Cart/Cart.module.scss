@@ -1,0 +1,24 @@
+.container {
+  max-width: 820px;
+  margin: 90px auto;
+}
+
+.cart {
+  &__top {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+  }
+
+  .content__items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .content__title &__bottom {
+    margin: 50px 0;
+  }
+}

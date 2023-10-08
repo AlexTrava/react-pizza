@@ -1,55 +1,22 @@
 import "./scss/app.scss";
-import Header from "./components/Header/Header";
-import Categories from "./components/Categories/Categories";
-import Sort from "./components/Sort/Sort";
-import PizzaCard from "./components/PizzaCard/PizzaCard";
-import uniqId from "lodash.uniqueid";
-// import axios from "axios";
-import { useState, useEffect } from "react";
-// import pizzas from "./pizza.json";
-import Skeleton from "./components/Skeleton/Skeleton";
+import { Route, Routes } from "react-router-dom";
 
-const URL_ITEMS = "https://651e965944a3a8aa4768a0da.mockapi.io/items";
+import Header from "./components/Header/Header";
+import Home from "./pages/Home/Home";
+import NotFound from "./pages/NotFound";
+import Cart from "./pages/Cart/Cart";
 
 function App() {
-  const [items, setItems] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const resp = () => {
-      fetch(URL_ITEMS)
-        .then((data) => data.json())
-        .then((data2) => {
-          setLoading(false)
-          setItems(data2)})
-        .catch((e) => console.log(e));
-    };
-    resp();
-  }, []);
   return (
     <div className="wrapper">
       <Header />
       <div className="content">
         <div className="container">
-          <div className="content__top">
-            <Categories />
-            <Sort />
-          </div>
-          <h2 className="content__title">Все пиццы</h2>
-          <div className="content__items">
-            {isLoading
-              ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-              : items.map(({ id, title, price, imageUrl, sizes, types }) => (
-                  <PizzaCard
-                    pizzaName={title}
-                    price={price}
-                    img={imageUrl}
-                    size={sizes}
-                    types={types}
-                    key={uniqId("card_")}
-                  />
-                ))}
-          </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
         </div>
       </div>
     </div>
