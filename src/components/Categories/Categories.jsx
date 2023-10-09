@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./Categories.module.scss";
 import uniqId from "lodash.uniqueid";
 
-const Categories = () => {
+const Categories = ({funcCategory}) => {
   const categoriesArr = [
     "Все",
     "Мясные",
@@ -16,7 +16,7 @@ const Categories = () => {
   const onClickCategory = (index) => {
     setActiveCategory(() => index);
   };
-
+  funcCategory(activeCategory);
   return (
     <div className={styles.categories}>
       <ul>

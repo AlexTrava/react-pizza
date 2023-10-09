@@ -2,7 +2,7 @@ import styles from "./Sort.module.scss";
 import { useState } from "react";
 import uniqId from "lodash.uniqueid";
 
-const Sort = () => {
+const Sort = ({funcSort}) => {
   const listPop = ["Популярности", "Цене", "Алфавиту"];
   const [isVisiblePopUp, setIsVisiblePopUp] = useState(false);
   const [activePop, setActivePop] = useState(0);
@@ -12,7 +12,7 @@ const Sort = () => {
     setActivePop(() => index);
     setIsVisiblePopUp(() => false);
   };
-
+  funcSort(activePop);
   return (
     <div className={styles.sort}>
       <div className={styles.sort__label}>
