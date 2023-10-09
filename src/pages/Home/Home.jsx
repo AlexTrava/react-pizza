@@ -13,12 +13,13 @@ const Home = () => {
   const [isLoading, setLoading] = useState(true);
 
   const [categoryId, setCategoryId] = useState(0);
-  const [sortType, setSortType] = useState('');
+  const [sortType, setSortType] = useState("");
 
   console.log(categoryId);
   console.log(sortType);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`${URL_ITEMS}?category=${categoryId}`)
       .then((data) => data.json())
       .then((data2) => {
@@ -32,8 +33,8 @@ const Home = () => {
   return (
     <>
       <div className="content__top">
-        <Categories funcCategory={setCategoryId}/>
-        <Sort funcSort={setSortType}/>
+        <Categories funcCategory={setCategoryId} />
+        <Sort funcSort={setSortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
