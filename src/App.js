@@ -8,14 +8,14 @@ import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart/Cart";
 
 function App() {
-
+  const [searchValue, setSearchValue] = useState("");
   return (
     <div className="wrapper">
-      <Header />
+      <Header setSearchValue={setSearchValue} searchValue={searchValue} />
       <div className="content">
         <div className="container">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home searchValue={searchValue} />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>

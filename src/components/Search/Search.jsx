@@ -1,9 +1,8 @@
 import { useState, useRef } from "react";
 import styles from "./Search.module.scss";
 
-const Search = () => {
+const Search = ({ setSearchValue, searchValue }) => {
   const inputEl = useRef();
-
 
   return (
     <div className={styles.search__wraper}>
@@ -31,6 +30,8 @@ const Search = () => {
         placeholder="Поиск пиццы..."
         className={styles.search__input}
         ref={inputEl}
+        onChange={() => setSearchValue(inputEl.current.value)}
+        value={searchValue}
       />
     </div>
   );
