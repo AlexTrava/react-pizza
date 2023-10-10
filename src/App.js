@@ -1,5 +1,6 @@
 import "./scss/app.scss";
 import { Route, Routes } from "react-router-dom";
+import { useState } from "react";
 
 import Header from "./components/Header/Header";
 import Home from "./pages/Home/Home";
@@ -7,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart/Cart";
 
 function App() {
+
   return (
     <div className="wrapper">
       <Header />

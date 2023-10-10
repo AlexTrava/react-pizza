@@ -13,27 +13,27 @@ const Home = () => {
   const [isLoading, setLoading] = useState(true);
 
   const [categoryId, setCategoryId] = useState(0);
-  const [sortType, setSortType] = useState('');
-
-  console.log(categoryId);
-  console.log(sortType);
+  const [sortType, setSortType] = useState("");
 
   useEffect(() => {
-    fetch(`${URL_ITEMS}?category=${categoryId}`)
+    fetch(
+      `${URL_ITEMS}?${
+        categoryId > 0 ? `category=${categoryId}` : ""
+      }&sortBy=${sortType}&order=desc`
+    )
       .then((data) => data.json())
       .then((data2) => {
         setLoading(false);
         setItems(data2);
       })
       .catch((e) => console.log(e));
-
     window.scrollTo(0, 0);
   }, [categoryId, sortType]);
   return (
     <>
       <div className="content__top">
-        <Categories funcCategory={setCategoryId}/>
-        <Sort funcSort={setSortType}/>
+        <Categories funcCategory={setCategoryId} />
+        <Sort funcSort={setSortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
