@@ -1,9 +1,11 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import styles from "./Search.module.scss";
+import { SearchContext } from "../../App";
 
-const Search = ({ setSearchValue, searchValue }) => {
+const Search = () => {
   const inputEl = useRef();
 
+  const { searchValue, setSearchValue } = useContext(SearchContext);
   return (
     <div className={styles.search__wraper}>
       <svg
