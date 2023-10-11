@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import uniqId from "lodash.uniqueid";
 
 import Categories from "../../components/Categories/Categories";
@@ -6,20 +6,23 @@ import Sort from "../../components/Sort/Sort";
 import Skeleton from "../../components/Skeleton/Skeleton";
 import PizzaCard from "../../components/PizzaCard/PizzaCard";
 import Pagination from "../../components/Pagination/Pagination";
+import { SearchContext } from "../../App";
 
 const URL_ITEMS = "https://651e965944a3a8aa4768a0da.mockapi.io/items";
 
-const Home = ({ searchValue }) => {
+const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [categoryId, setCategoryId] = useState(0);
   const [sortType, setSortType] = useState("");
 
+  const { searchValue, setSearchValue } = useContext(SearchContext);
+
   useEffect(() => {
     setLoading(true);
     fetch(
-      `${URL_ITEMS}?page=${currentPage}&limit=4${
+      `${URL_ITEMS}?page=${currentPage}&limit=4&${
         categoryId > 0 ? `category=${categoryId}` : ""
       }&sortBy=${sortType}${
         searchValue ? `&search=${searchValue}` : ""
@@ -51,7 +54,6 @@ const Home = ({ searchValue }) => {
         key={uniqId("card_")}
       />
     ));
-  console.log(items.filter((obj) => obj.title.includes(searchValue)));
   return (
     <>
       <div className="content__top">
