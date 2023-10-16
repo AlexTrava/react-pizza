@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useSelector } from "react-redux";
 import uniqId from "lodash.uniqueid";
 
 import Categories from "../../components/Categories/Categories";
@@ -14,7 +15,10 @@ const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [categoryId, setCategoryId] = useState(0);
+
+  const categoryId = useSelector((state) => state.category.categoryId);
+  const typeSort = useContext((state) => state.sort.activeSortType);
+  console.log(typeSort);
   const [sortType, setSortType] = useState("");
 
   const { searchValue, setSearchValue } = useContext(SearchContext);
@@ -24,7 +28,7 @@ const Home = () => {
     fetch(
       `${URL_ITEMS}?page=${currentPage}&limit=4&${
         categoryId > 0 ? `category=${categoryId}` : ""
-      }&sortBy=${sortType}${
+      }&sortBy=${typeSort}${
         searchValue ? `&search=${searchValue}` : ""
       }&order=desc`
     )
@@ -35,7 +39,7 @@ const Home = () => {
       })
       .catch((e) => console.log(e));
     window.scrollTo(0, 0);
-  }, [categoryId, sortType, searchValue, currentPage]);
+  }, [categoryId, typeSort, searchValue, currentPage]);
 
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
@@ -57,8 +61,8 @@ const Home = () => {
   return (
     <>
       <div className="content__top">
-        <Categories funcCategory={setCategoryId} />
-        <Sort funcSort={setSortType} />
+        <Categories />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>

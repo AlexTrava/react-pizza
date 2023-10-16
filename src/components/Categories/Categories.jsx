@@ -1,8 +1,10 @@
 import { useState } from "react";
 import styles from "./Categories.module.scss";
 import uniqId from "lodash.uniqueid";
+import { useSelector, useDispatch } from "react-redux";
+import { setCategoryId } from "../../redux/slices/categorySlice";
 
-const Categories = ({funcCategory}) => {
+const Categories = () => {
   const categoriesArr = [
     "Все",
     "Мясные",
@@ -11,20 +13,18 @@ const Categories = ({funcCategory}) => {
     "Острые",
     "Закрытые",
   ];
-  const [activeCategory, setActiveCategory] = useState(0);
 
-  const onClickCategory = (index) => {
-    setActiveCategory(() => index);
-  };
-  funcCategory(activeCategory);
+  const filterId = useSelector((state) => state.category.categoryId);
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.categories}>
       <ul>
         {categoriesArr.map((item, index) => (
           <li
-            onClick={() => onClickCategory(index)}
+            onClick={() => dispatch(setCategoryId(index))}
             key={uniqId("category_")}
-            className={activeCategory === index ? styles.active : ""}
+            className={filterId === index ? styles.active : ""}
           >
             {item}
           </li>

@@ -1,19 +1,23 @@
 import styles from "./Sort.module.scss";
 import { useState } from "react";
 import uniqId from "lodash.uniqueid";
+import { useSelector, useDispatch } from "react-redux";
+import { setSortId, setActiveSortType } from "../../redux/slices/sortSlice";
 
-const Sort = ({ funcSort }) => {
+const Sort = () => {
   const listPop = ["Популярности", "Цене", "Алфавиту"];
-  const sortList = ["rating", "price", 'title'];
+  const sortList = ["rating", "price", "title"];
   const [isVisiblePopUp, setIsVisiblePopUp] = useState(false);
-  const [activePop, setActivePop] = useState(0);
-  let sortName = listPop[activePop];
+
+  const sortId = useSelector((state) => state.sort.activeSortId);
+  const dispatch = useDispatch();
+  let sortName = listPop[sortId];
 
   const onClickPop = (index) => {
-    setActivePop(() => index);
+    dispatch(setSortId(index));
     setIsVisiblePopUp(() => false);
   };
-  funcSort(sortList[activePop]);
+  // () => dispatch(setActiveSortType(sortList[sortId]));
   return (
     <div className={styles.sort}>
       <div className={styles.sort__label}>
@@ -39,7 +43,7 @@ const Sort = ({ funcSort }) => {
           <ul>
             {listPop.map((item, index) => (
               <li
-                className={activePop === index ? styles.active : ""}
+                className={sortId === index ? styles.active : ""}
                 key={uniqId("list_pop_")}
                 onClick={() => onClickPop(index)}
               >
