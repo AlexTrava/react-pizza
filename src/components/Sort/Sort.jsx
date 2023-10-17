@@ -15,9 +15,10 @@ const Sort = () => {
 
   const onClickPop = (index) => {
     dispatch(setSortId(index));
+    dispatch(setActiveSortType(sortList[sortId]));
     setIsVisiblePopUp(() => false);
   };
-  // () => dispatch(setActiveSortType(sortList[sortId]));
+
   return (
     <div className={styles.sort}>
       <div className={styles.sort__label}>
