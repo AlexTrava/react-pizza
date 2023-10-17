@@ -18,8 +18,7 @@ const Home = () => {
 
   const categoryId = useSelector((state) => state.category.categoryId);
   const typeSort = useSelector((state) => state.sort.activeSortType);
-
-  const { searchValue, setSearchValue } = useContext(SearchContext);
+  const searchValue = useSelector((state) => state.search.searchValue);
 
   useEffect(() => {
     setLoading(true);
@@ -28,7 +27,7 @@ const Home = () => {
         categoryId > 0 ? `category=${categoryId}` : ""
       }&sortBy=${typeSort}${
         searchValue ? `&search=${searchValue}` : ""
-      }&order=desc`,
+      }&order=desc`
     )
       .then((data) => data.json())
       .then((data2) => {
