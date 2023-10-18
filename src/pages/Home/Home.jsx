@@ -29,7 +29,7 @@ const Home = () => {
           categoryId > 0 ? `category=${categoryId}` : ""
         }&sortBy=${typeSort}${
           searchValue ? `&search=${searchValue}` : ""
-        }&order=desc`,
+        }&order=desc`
       )
       .then((responce) => responce.data)
       .then((data) => {
