@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector } from "react-redux";
 import uniqId from "lodash.uniqueid";
+import axios from "axios";
 
 import Categories from "../../components/Categories/Categories";
 import Sort from "../../components/Sort/Sort";
@@ -22,17 +23,18 @@ const Home = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(
-      `${URL_ITEMS}?page=${currentPage}&limit=4&${
-        categoryId > 0 ? `category=${categoryId}` : ""
-      }&sortBy=${typeSort}${
-        searchValue ? `&search=${searchValue}` : ""
-      }&order=desc`
-    )
-      .then((data) => data.json())
-      .then((data2) => {
+    axios
+      .get(
+        `${URL_ITEMS}?page=${currentPage}&limit=4&${
+          categoryId > 0 ? `category=${categoryId}` : ""
+        }&sortBy=${typeSort}${
+          searchValue ? `&search=${searchValue}` : ""
+        }&order=desc`,
+      )
+      .then((responce) => responce.data)
+      .then((data) => {
         setLoading(false);
-        setItems(data2);
+        setItems(data);
       })
       .catch((e) => console.log(e));
     window.scrollTo(0, 0);
