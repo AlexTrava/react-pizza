@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useCallback } from "react";
 import _ from "lodash";
 import styles from "./Search.module.scss";
 import { SearchContext } from "../../App";
@@ -6,18 +6,30 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/searchSlice";
 
 const Search = () => {
+  const [value, setValue] = useState("");
   const inputEl = useRef();
   const searchValue = useSelector((state) => state.search.searchValue);
   const dispatch = useDispatch();
 
-  const inputHandler = () => {
-    _.debounce(
-      () => {
-        dispatch(setSearchValue(inputEl.current.value));
-      },
-      3000,
-      { leading: true, maxWait: 3500, trailing: true }
-    );
+  const updateSearchValue = useCallback(
+    _.debounce((str) => {
+      setValue(str);
+    }, 1000),
+    [],
+  );
+
+  const updateSearchValueTest = useCallback(
+    _.debounce((str) => {
+      setValue(str);
+    }, 300),
+    [],
+  );
+
+  const onChangeInput = (inputEl) => {
+    updateSearchValueTest(inputEl.current.value);
+    dispatch(setSearchValue(value));
+
+    console.log("test");
   };
 
   const crossHandler = () => {
@@ -50,7 +62,7 @@ const Search = () => {
         placeholder="Поиск пиццы..."
         className={styles.search__input}
         ref={inputEl}
-        onChange={inputHandler}
+        onChange={() => onChangeInput(inputEl)}
         value={searchValue}
       />
       <svg
