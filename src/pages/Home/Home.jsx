@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 import uniqId from "lodash.uniqueid";
 import axios from "axios";
 
@@ -8,18 +9,25 @@ import Sort from "../../components/Sort/Sort";
 import Skeleton from "../../components/Skeleton/Skeleton";
 import PizzaCard from "../../components/PizzaCard/PizzaCard";
 import Pagination from "../../components/Pagination/Pagination";
-import { SearchContext } from "../../App";
+
+import { setPageCurrent } from "../../redux/slices/paginationSlice";
 
 const URL_ITEMS = "https://651e965944a3a8aa4768a0da.mockapi.io/items";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const [items, setItems] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
 
   const categoryId = useSelector((state) => state.category.categoryId);
   const typeSort = useSelector((state) => state.sort.activeSortType);
   const searchValue = useSelector((state) => state.search.searchValue);
+  const currentPage = useSelector((state) => state.pagination.activePageCount);
+
+  const onChangePage = (number) => {
+    dispatch(setPageCurrent(number));
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -65,7 +73,7 @@ const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </>
   );
 };

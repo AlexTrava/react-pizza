@@ -1,5 +1,5 @@
 import { useState, useRef, useContext, useCallback } from "react";
-import _ from "lodash";
+import { debounce } from "lodash";
 import styles from "./Search.module.scss";
 import { SearchContext } from "../../App";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,29 +11,21 @@ const Search = () => {
   const searchValue = useSelector((state) => state.search.searchValue);
   const dispatch = useDispatch();
 
-  const updateSearchValue = useCallback(
-    _.debounce((str) => {
-      setValue(str);
-    }, 1000),
-    [],
-  );
-
   const updateSearchValueTest = useCallback(
-    _.debounce((str) => {
-      setValue(str);
-    }, 300),
-    [],
+    debounce((str) => {
+      dispatch(setSearchValue(str));
+    }, 750),
+    []
   );
 
-  const onChangeInput = (inputEl) => {
-    updateSearchValueTest(inputEl.current.value);
-    dispatch(setSearchValue(value));
-
-    console.log("test");
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
+    updateSearchValueTest(e.target.value);
   };
 
   const crossHandler = () => {
     dispatch(setSearchValue(""));
+    setValue("");
     inputEl.current.focus();
   };
   return (
@@ -62,8 +54,8 @@ const Search = () => {
         placeholder="Поиск пиццы..."
         className={styles.search__input}
         ref={inputEl}
-        onChange={() => onChangeInput(inputEl)}
-        value={searchValue}
+        onChange={onChangeInput}
+        value={value}
       />
       <svg
         className={styles.icon__cross}
