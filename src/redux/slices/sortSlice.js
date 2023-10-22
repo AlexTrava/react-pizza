@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   activeSortId: 0,
-  activeSortType: "",
+  activeSortType: "rating",
 };
 
 const sortSlice = createSlice({
