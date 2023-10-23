@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./Categories.module.scss";
 import uniqId from "lodash.uniqueid";
 import { useSelector, useDispatch } from "react-redux";
-import { setCategoryId } from "../../redux/slices/categorySlice";
+import { setCategoryId } from "../../redux/slices/optionsSlice";
 
 const Categories = () => {
   const categoriesArr = [
@@ -14,7 +14,7 @@ const Categories = () => {
     "Закрытые",
   ];
 
-  const filterId = useSelector((state) => state.category.categoryId);
+  const filterId = useSelector((state) => state.options.categoryId);
   const dispatch = useDispatch();
 
   return (

@@ -1,14 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import categorySlice from "./slices/categorySlice";
-import sortSlice from "./slices/sortSlice";
 import searchSlice from "./slices/searchSlice";
-import paginationSlice from "./slices/paginationSlice";
+import optionsSlice from "./slices/optionsSlice";
 
 export const store = configureStore({
   reducer: {
-    category: categorySlice,
-    sort: sortSlice,
+    options: optionsSlice,
     search: searchSlice,
-    pagination: paginationSlice,
   },
 });
+
+// , , currentPage
+// , sortSlice, paginationSlice
+
+// down categoryId typeSort

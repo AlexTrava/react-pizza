@@ -12,7 +12,7 @@ import Skeleton from "../../components/Skeleton/Skeleton";
 import PizzaCard from "../../components/PizzaCard/PizzaCard";
 import Pagination from "../../components/Pagination/Pagination";
 
-import { setPageCurrent } from "../../redux/slices/paginationSlice";
+import { setPageCurrent } from "../../redux/slices/optionsSlice";
 
 const URL_ITEMS = "https://651e965944a3a8aa4768a0da.mockapi.io/items";
 
@@ -22,10 +22,10 @@ const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  const categoryId = useSelector((state) => state.category.categoryId);
-  const typeSort = useSelector((state) => state.sort.activeSortType);
+  const categoryId = useSelector((state) => state.options.categoryId);
+  const typeSort = useSelector((state) => state.options.activeSortType);
   const searchValue = useSelector((state) => state.search.searchValue);
-  const currentPage = useSelector((state) => state.pagination.activePageCount);
+  const currentPage = useSelector((state) => state.options.activePageCount);
 
   const onChangePage = (number) => {
     dispatch(setPageCurrent(number));
@@ -46,7 +46,7 @@ const Home = () => {
           categoryId > 0 ? `category=${categoryId}` : ""
         }&sortBy=${typeSort}${
           searchValue ? `&search=${searchValue}` : ""
-        }&order=desc`
+        }&order=desc`,
       )
       .then((responce) => responce.data)
       .then((data) => {
