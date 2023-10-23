@@ -1,11 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
   categoryId: 0,
   activeSortId: 0,
   activeSortType: "rating",
   activePageCount: 1,
-  
 };
 
 const optionsSlice = createSlice({
@@ -24,10 +23,21 @@ const optionsSlice = createSlice({
     setPageCurrent(state, action) {
       state.activePageCount = action.payload;
     },
+    setFilters(state, action) {
+      state.activePageCount = Number(action.payload.currentPage);
+      state.categoryId = Number(action.payload.categoryId);
+      state.activeSortType = action.payload.sortProperty;
+      console.log(current(state), "slice state");
+    },
   },
 });
 
-export const { setCategoryId, setSortId, setActiveSortType, setPageCurrent } =
-  optionsSlice.actions;
+export const {
+  setCategoryId,
+  setSortId,
+  setActiveSortType,
+  setPageCurrent,
+  setFilters,
+} = optionsSlice.actions;
 
 export default optionsSlice.reducer;
