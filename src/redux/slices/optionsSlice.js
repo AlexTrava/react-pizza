@@ -27,7 +27,6 @@ const optionsSlice = createSlice({
       state.activePageCount = Number(action.payload.currentPage);
       state.categoryId = Number(action.payload.categoryId);
       state.activeSortType = action.payload.sortProperty;
-      console.log(current(state), "slice state");
     },
   },
 });

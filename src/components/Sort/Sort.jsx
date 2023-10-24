@@ -1,5 +1,5 @@
 import styles from "./Sort.module.scss";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import uniqId from "lodash.uniqueid";
 import { useSelector, useDispatch } from "react-redux";
 import { setSortId, setActiveSortType } from "../../redux/slices/optionsSlice";
@@ -8,6 +8,7 @@ const Sort = () => {
   const listPop = ["Популярности", "Цене", "Алфавиту"];
   const sortList = ["rating", "price", "title"];
   const [isVisiblePopUp, setIsVisiblePopUp] = useState(false);
+  const sortRef = useRef();
 
   const sortId = useSelector((state) => state.options.activeSortId);
   const dispatch = useDispatch();
@@ -19,8 +20,22 @@ const Sort = () => {
     setIsVisiblePopUp(() => false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.composedPath().includes(sortRef.current)) {
+        setIsVisiblePopUp(false);
+        console.log("click outside");
+      }
+    };
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className={styles.sort}>
+    <div className={styles.sort} ref={sortRef}>
       <div className={styles.sort__label}>
         <svg
           width="10"
