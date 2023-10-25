@@ -1,9 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import { removeProduct, clearCart } from "../../redux/slices/cartSlice";
 
 import styles from "./Cart.module.scss";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.container}>
       <div className={styles.cart}>

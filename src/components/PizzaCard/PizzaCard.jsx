@@ -1,8 +1,12 @@
 import styles from "./PizzaCard.module.scss";
 import { useState } from "react";
 import uniqId from "lodash.uniqueid";
+import { useSelector, useDispatch } from "react-redux";
+
+import { addProduct } from "../../redux/slices/cartSlice";
 
 const PizzaCard = ({ pizzaName, price, img, size, types }) => {
+  const dispatch = useDispatch();
   const typesPizza = ["Тонкое", "Традиционное"];
   const [count, setCount] = useState(1);
   const [typeActive, setTypeActive] = useState(null);
