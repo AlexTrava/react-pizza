@@ -12,6 +12,11 @@ const PizzaCard = ({ pizzaName, price, img, size, types }) => {
   const [typeActive, setTypeActive] = useState(null);
   const [sizeActive, setSizeActive] = useState(null);
 
+  const onClickAdd = () => {
+    const item = {};
+    dispatch(addProduct());
+  };
+
   const countHandler = () => {
     setCount(() => count + 1);
   };
