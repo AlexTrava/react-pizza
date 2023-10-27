@@ -42,7 +42,7 @@ const Home = () => {
           categoryId > 0 ? `category=${categoryId}` : ""
         }&sortBy=${typeSort}${
           searchValue ? `&search=${searchValue}` : ""
-        }&order=desc`
+        }&order=desc`,
       )
       .then((responce) => responce.data)
       .then((data) => {
@@ -91,6 +91,7 @@ const Home = () => {
     // )
     .map(({ id, title, price, imageUrl, sizes, types }) => (
       <PizzaCard
+        id={id}
         pizzaName={title}
         price={price}
         img={imageUrl}

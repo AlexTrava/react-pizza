@@ -12,12 +12,14 @@ const cartSlice = createSlice({
   reducers: {
     addProduct(state, action) {
       state.cartList.push(action.payload);
+      state.countProduct = state.cartList.length;
+      state.resultSum = state.resultSum + action.payload.price;
       console.log(current(state), "its cart state");
     },
 
     removeProduct(state, action) {
       state.cartList = state.cartList.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
     },
     clearCart(state) {

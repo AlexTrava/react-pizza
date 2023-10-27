@@ -2,7 +2,7 @@ import styles from "./Header.module.scss";
 import logo from "../../img/pizza-logo.svg";
 import Search from "../Search/Search";
 import { Link } from "react-router-dom";
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
 const Header = () => {
   const { countProduct, resultSum } = useSelector((state) => state.cart);
