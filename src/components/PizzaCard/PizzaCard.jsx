@@ -8,10 +8,11 @@ import { addProduct } from "../../redux/slices/cartSlice";
 const PizzaCard = ({ id, pizzaName, price, img, size, types }) => {
   const typesPizza = ["Тонкое", "Традиционное"];
   const typeNames = ["тонкое", "традиционное"];
+  const typeSizes = ["26 см", "30 см", "40 см"];
   const dispatch = useDispatch();
 
   const cartItem = useSelector((state) =>
-    state.cart.cartList.find((product) => product.id === id),
+    state.cart.cartList.find((product) => product.id === id)
   );
   const addedCount = cartItem ? cartItem.count : 0;
   const [typeActive, setTypeActive] = useState(null);
@@ -24,7 +25,7 @@ const PizzaCard = ({ id, pizzaName, price, img, size, types }) => {
       price,
       img,
       type: typeNames[typeActive],
-      size: sizeActive,
+      size: typeSizes[sizeActive],
     };
     dispatch(addProduct(item));
   };

@@ -11,31 +11,32 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addProduct(state, action) {
-      // state.cartList.push(action.payload);
-      // state.countProduct = state.cartList.length;
-      // state.resultSum = state.resultSum + action.payload.price;
-      // console.log(current(state), "its cart state");
       const findItem = state.cartList.find(
-        (product) => product.id === action.payload.id,
+        (product) => product.id === action.payload.id
       );
       console.log(findItem, "ist findItem");
 
       if (findItem) {
         findItem.count++;
+        findItem.resultPrice = findItem.resultPrice + action.payload.price;
       } else {
         state.cartList.push({
           ...action.payload,
           count: 1,
+          resultPrice: action.payload.price,
         });
       }
-      state.countProduct++;
-      state.resultSum = state.resultSum + action.payload.price;
-      console.log(current(state), "its cart state");
+      state.countProduct = state.cartList.reduce((sum, { count }) => {
+        return sum + count;
+      }, 0);
+      state.resultSum = state.cartList.reduce((sum, { resultPrice }) => {
+        return sum + resultPrice;
+      }, 0);
     },
 
     removeProduct(state, action) {
       state.cartList = state.cartList.filter(
-        (item) => item.id !== action.payload,
+        (item) => item.id !== action.payload
       );
     },
     clearCart(state) {
