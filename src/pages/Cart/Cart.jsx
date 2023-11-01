@@ -11,6 +11,8 @@ import styles from "./Cart.module.scss";
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartList);
+  const countPizzasCart = useSelector((state) => state.cart.countProduct);
+  const resultSummProduct = useSelector((state) => state.cart.resultSum);
   return (
     <div className={styles.container}>
       <div className={styles.cart}>
@@ -102,16 +104,16 @@ const Cart = () => {
                 resultPrice={resultPrice}
                 key={uniqId("cart_item_")}
               />
-            ),
+            )
           )}
         </div>
         <div className={styles.cart__bottom}>
           <div className="cart__bottom-details">
             <span>
-              Всего пицц: <b>3 шт.</b>{" "}
+              Всего пицц: <b>{countPizzasCart} шт.</b>
             </span>
             <span>
-              Сумма заказа: <b>900 ₽</b>{" "}
+              Сумма заказа: <b>{resultSummProduct} ₽</b>
             </span>
           </div>
           <div className="cart__bottom-buttons">

@@ -1,6 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeProduct, addProduct } from "../../redux/slices/cartSlice";
+import {
+  removeProduct,
+  addProduct,
+  minusProduct,
+} from "../../redux/slices/cartSlice";
 
 const CartItem = ({
   id,
@@ -24,6 +28,16 @@ const CartItem = ({
     dispatch(addProduct(item));
   };
 
+  const onClickMinusProduct = () => {
+    const item = {
+      id,
+      pizzaName,
+      price,
+      img,
+    };
+    dispatch(minusProduct(item));
+  };
+
   const onClickRemoveProduct = () => {
     const idItem = id;
     dispatch(removeProduct(id));
@@ -41,7 +55,10 @@ const CartItem = ({
         </p>
       </div>
       <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
+        <div
+          className="button button--outline button--circle cart__item-count-minus"
+          onClick={onClickMinusProduct}
+        >
           <svg
             width="10"
             height="10"
