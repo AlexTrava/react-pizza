@@ -12,7 +12,7 @@ const cartSlice = createSlice({
   reducers: {
     addProduct(state, action) {
       const findItem = state.cartList.find(
-        (product) => product.id === action.payload.id
+        (product) => product.id === action.payload.id,
       );
       console.log(findItem, "ist findItem");
 
@@ -36,11 +36,13 @@ const cartSlice = createSlice({
 
     removeProduct(state, action) {
       state.cartList = state.cartList.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
     },
     clearCart(state) {
       state.cartList = [];
+      state.countProduct = 0;
+      state.resultSum = 0;
     },
   },
 });

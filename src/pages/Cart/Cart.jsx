@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { clearCart } from "../../redux/slices/cartSlice";
 
-import { removeProduct, clearCart } from "../../redux/slices/cartSlice";
 import uniqId from "lodash.uniqueid";
 
 import CartItem from "../../components/CartItem/CartItem";
@@ -85,7 +85,7 @@ const Cart = () => {
               ></path>
             </svg>
 
-            <span>Очистить корзину</span>
+            <span onClick={() => dispatch(clearCart())}>Очистить корзину</span>
           </div>
         </div>
         <div className={styles.content__items}>
@@ -102,7 +102,7 @@ const Cart = () => {
                 resultPrice={resultPrice}
                 key={uniqId("cart_item_")}
               />
-            )
+            ),
           )}
         </div>
         <div className={styles.cart__bottom}>
