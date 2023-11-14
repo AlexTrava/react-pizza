@@ -34,23 +34,25 @@ const Home = () => {
     dispatch(setPageCurrent(number));
   };
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setLoading(true);
-    axios
-      .get(
+
+    try {
+      const res = await axios.get(
         `${URL_ITEMS}?page=${currentPage}&limit=4&${
           categoryId > 0 ? `category=${categoryId}` : ""
         }&sortBy=${typeSort}${
           searchValue ? `&search=${searchValue}` : ""
         }&order=desc`,
-      )
-      .then((responce) => responce.data)
-      .then((data) => {
-        setLoading(false);
-        setItems(data);
-      })
-      .catch((e) => console.log(e));
-    window.scrollTo(0, 0);
+      );
+      setLoading(false);
+      setItems(res.data);
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
