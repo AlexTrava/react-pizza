@@ -13,6 +13,7 @@ import PizzaCard from "../../components/PizzaCard/PizzaCard";
 import Pagination from "../../components/Pagination/Pagination";
 
 import { setPageCurrent, setFilters } from "../../redux/slices/optionsSlice";
+import { setItems } from "../../redux/slices/pizzaSlice";
 
 const URL_ITEMS = "https://651e965944a3a8aa4768a0da.mockapi.io/items";
 
@@ -22,13 +23,13 @@ const Home = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const [items, setItems] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   const categoryId = useSelector((state) => state.options.categoryId);
   const typeSort = useSelector((state) => state.options.activeSortType);
   const searchValue = useSelector((state) => state.search.searchValue);
   const currentPage = useSelector((state) => state.options.activePageCount);
+  const pizzaItems = useSelector((state) => state.pizza.items);
 
   const onChangePage = (number) => {
     dispatch(setPageCurrent(number));
@@ -38,15 +39,15 @@ const Home = () => {
     setLoading(true);
 
     try {
-      const res = await axios.get(
+      const { data } = await axios.get(
         `${URL_ITEMS}?page=${currentPage}&limit=4&${
           categoryId > 0 ? `category=${categoryId}` : ""
         }&sortBy=${typeSort}${
           searchValue ? `&search=${searchValue}` : ""
-        }&order=desc`,
+        }&order=desc`
       );
+      dispatch(setItems(data));
       setLoading(false);
-      setItems(res.data);
       window.scrollTo(0, 0);
     } catch (error) {
       console.log(error);
@@ -87,7 +88,7 @@ const Home = () => {
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
   ));
-  const pizzas = items
+  const pizzas = pizzaItems
     // .filter((obj) =>
     //   obj.title.toLowerCase().includes(searchValue.toLowerCase())
     // )
