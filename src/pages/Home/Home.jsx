@@ -13,7 +13,7 @@ import PizzaCard from "../../components/PizzaCard/PizzaCard";
 import Pagination from "../../components/Pagination/Pagination";
 
 import { setPageCurrent, setFilters } from "../../redux/slices/optionsSlice";
-import { setItems } from "../../redux/slices/pizzaSlice";
+import { setItems, fetchPizzas } from "../../redux/slices/pizzaSlice";
 
 const URL_ITEMS = "https://651e965944a3a8aa4768a0da.mockapi.io/items";
 
@@ -30,23 +30,25 @@ const Home = () => {
   const searchValue = useSelector((state) => state.search.searchValue);
   const currentPage = useSelector((state) => state.options.activePageCount);
   const pizzaItems = useSelector((state) => state.pizza.items);
+  // const status = useSelector((state) => state.pizza.status);
 
   const onChangePage = (number) => {
     dispatch(setPageCurrent(number));
   };
 
-  const fetchPizzas = async () => {
+  const getPizzas = async () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.get(
-        `${URL_ITEMS}?page=${currentPage}&limit=4&${
-          categoryId > 0 ? `category=${categoryId}` : ""
-        }&sortBy=${typeSort}${
-          searchValue ? `&search=${searchValue}` : ""
-        }&order=desc`
+      dispatch(
+        fetchPizzas({
+          URL_ITEMS,
+          currentPage,
+          categoryId,
+          typeSort,
+          searchValue,
+        }),
       );
-      dispatch(setItems(data));
       setLoading(false);
       window.scrollTo(0, 0);
     } catch (error) {
@@ -80,7 +82,7 @@ const Home = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
     isSearch.current = false;
   }, [categoryId, typeSort, searchValue, currentPage]);
