@@ -9,10 +9,10 @@ export const fetchPizzas = createAsyncThunk(
         categoryId > 0 ? `category=${categoryId}` : ""
       }&sortBy=${typeSort}${
         searchValue ? `&search=${searchValue}` : ""
-      }&order=desc`,
+      }&order=desc`
     );
     return data;
-  },
+  }
 );
 
 const initialState = {
@@ -27,6 +27,7 @@ const pizzaSlice = createSlice({
   extraReducers: {
     [fetchPizzas.pending]: (state, action) => {
       state.status = "loading";
+      state.items = [];
     },
     [fetchPizzas.fulfilled]: (state, action) => {
       state.items = action.payload;
@@ -34,6 +35,7 @@ const pizzaSlice = createSlice({
     },
     [fetchPizzas.rejected]: (state, action) => {
       state.status = "error";
+      state.items = [];
     },
   },
 });

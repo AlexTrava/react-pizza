@@ -23,39 +23,28 @@ const Home = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const [isLoading, setLoading] = useState(true);
-
   const categoryId = useSelector((state) => state.options.categoryId);
   const typeSort = useSelector((state) => state.options.activeSortType);
   const searchValue = useSelector((state) => state.search.searchValue);
   const currentPage = useSelector((state) => state.options.activePageCount);
   const pizzaItems = useSelector((state) => state.pizza.items);
-  // const status = useSelector((state) => state.pizza.status);
+  const status = useSelector((state) => state.pizza.status);
 
   const onChangePage = (number) => {
     dispatch(setPageCurrent(number));
   };
 
   const getPizzas = async () => {
-    setLoading(true);
-
-    try {
-      dispatch(
-        fetchPizzas({
-          URL_ITEMS,
-          currentPage,
-          categoryId,
-          typeSort,
-          searchValue,
-        }),
-      );
-      setLoading(false);
-      window.scrollTo(0, 0);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    dispatch(
+      fetchPizzas({
+        URL_ITEMS,
+        currentPage,
+        categoryId,
+        typeSort,
+        searchValue,
+      })
+    );
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -112,7 +101,17 @@ const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      <div className="content__items">
+        {status === "error" ? (
+          <div>
+            <h2>Ошибка, пожалуйста перезагрузите страницу.</h2>
+          </div>
+        ) : status === "loading" || status === "error" ? (
+          skeletons
+        ) : (
+          pizzas
+        )}
+      </div>
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </>
   );
