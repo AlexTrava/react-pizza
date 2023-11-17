@@ -39,4 +39,6 @@ export const {
   setFilters,
 } = optionsSlice.actions;
 
+export const selectorActiveId = (state) => state.options.activeSortId;
+
 export default optionsSlice.reducer;

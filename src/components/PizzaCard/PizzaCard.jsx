@@ -3,7 +3,7 @@ import { useState } from "react";
 import uniqId from "lodash.uniqueid";
 import { useSelector, useDispatch } from "react-redux";
 
-import { addProduct } from "../../redux/slices/cartSlice";
+import { addProduct, cartItemByIdSelector } from "../../redux/slices/cartSlice";
 
 const PizzaCard = ({ id, pizzaName, price, img, size, types }) => {
   const typesPizza = ["Тонкое", "Традиционное"];
@@ -11,9 +11,7 @@ const PizzaCard = ({ id, pizzaName, price, img, size, types }) => {
   const typeSizes = ["26 см", "30 см", "40 см"];
   const dispatch = useDispatch();
 
-  const cartItem = useSelector((state) =>
-    state.cart.cartList.find((product) => product.id === id)
-  );
+  const cartItem = useSelector(cartItemByIdSelector(id));
   const addedCount = cartItem ? cartItem.count : 0;
   const [typeActive, setTypeActive] = useState(null);
   const [sizeActive, setSizeActive] = useState(null);

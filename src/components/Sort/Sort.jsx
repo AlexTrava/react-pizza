@@ -2,7 +2,11 @@ import styles from "./Sort.module.scss";
 import { useState, useRef, useEffect } from "react";
 import uniqId from "lodash.uniqueid";
 import { useSelector, useDispatch } from "react-redux";
-import { setSortId, setActiveSortType } from "../../redux/slices/optionsSlice";
+import {
+  setSortId,
+  setActiveSortType,
+  selectorActiveId,
+} from "../../redux/slices/optionsSlice";
 
 const Sort = () => {
   const listPop = ["Популярности", "Цене", "Алфавиту"];
@@ -10,7 +14,7 @@ const Sort = () => {
   const [isVisiblePopUp, setIsVisiblePopUp] = useState(false);
   const sortRef = useRef();
 
-  const sortId = useSelector((state) => state.options.activeSortId);
+  const sortId = useSelector(selectorActiveId);
   const dispatch = useDispatch();
   let sortName = listPop[sortId];
 

@@ -3,16 +3,20 @@ import axios from "axios";
 
 export const fetchPizzas = createAsyncThunk(
   "pizza/fetchPizzaStatus",
-  async ({ URL_ITEMS, currentPage, categoryId, typeSort, searchValue }) => {
+  async (
+    { URL_ITEMS, currentPage, categoryId, typeSort, searchValue },
+    thunkAPI,
+  ) => {
     const { data } = await axios.get(
       `${URL_ITEMS}?page=${currentPage}&limit=4&${
         categoryId > 0 ? `category=${categoryId}` : ""
       }&sortBy=${typeSort}${
         searchValue ? `&search=${searchValue}` : ""
-      }&order=desc`
+      }&order=desc`,
     );
+    console.log(thunkAPI.getState());
     return data;
-  }
+  },
 );
 
 const initialState = {

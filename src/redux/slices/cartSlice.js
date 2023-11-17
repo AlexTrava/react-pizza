@@ -12,7 +12,7 @@ const cartSlice = createSlice({
   reducers: {
     addProduct(state, action) {
       const findItem = state.cartList.find(
-        (product) => product.id === action.payload.id
+        (product) => product.id === action.payload.id,
       );
 
       if (findItem) {
@@ -35,7 +35,7 @@ const cartSlice = createSlice({
 
     minusProduct(state, action) {
       const findItem = state.cartList.find(
-        (product) => product.id === action.payload.id
+        (product) => product.id === action.payload.id,
       );
       findItem.count--;
       state.resultSum = state.resultSum - action.payload.price;
@@ -44,10 +44,10 @@ const cartSlice = createSlice({
 
     removeProduct(state, action) {
       const findItem = state.cartList.find(
-        (product) => product.id === action.payload
+        (product) => product.id === action.payload,
       );
       state.cartList = state.cartList.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload,
       );
       state.resultSum = state.resultSum - findItem.resultPrice;
       state.countProduct = state.countProduct - findItem.count;
@@ -59,6 +59,10 @@ const cartSlice = createSlice({
     },
   },
 });
+
+export const cartSlector = (state) => state.cart;
+export const cartItemByIdSelector = (id) =>(state) =>
+    state.cart.cartList.find((product) => product.id === id)
 
 export const { addProduct, removeProduct, clearCart, minusProduct } =
   cartSlice.actions;
