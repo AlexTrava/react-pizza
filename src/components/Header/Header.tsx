@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./Header.module.scss";
 import logo from "../../img/pizza-logo.svg";
 import Search from "../Search/Search";
@@ -5,7 +6,8 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { cartSlector } from "../../redux/slices/cartSlice";
 
-const Header = () => {
+
+const Header:React.FC = () => {
   const { countProduct, resultSum } = useSelector(cartSlector);
   return (
     <div className={styles.header}>

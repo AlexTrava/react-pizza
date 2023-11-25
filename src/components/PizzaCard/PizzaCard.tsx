@@ -1,11 +1,20 @@
 import styles from "./PizzaCard.module.scss";
-import { useState } from "react";
+import React, { useState } from "react";
 import uniqId from "lodash.uniqueid";
 import { useSelector, useDispatch } from "react-redux";
 
 import { addProduct, cartItemByIdSelector } from "../../redux/slices/cartSlice";
 
-const PizzaCard = ({ id, pizzaName, price, img, size, types }) => {
+export type PizzaCardProps = {
+  id:number,
+  pizzaName:string,
+  price:number,
+  img:string,
+  size:string[],
+  types:number[],
+}
+
+const PizzaCard: React.FC<PizzaCardProps> = ({ id, pizzaName, price, img, size, types }) => {
   const typesPizza = ["Тонкое", "Традиционное"];
   const typeNames = ["тонкое", "традиционное"];
   const typeSizes = ["26 см", "30 см", "40 см"];
@@ -13,8 +22,8 @@ const PizzaCard = ({ id, pizzaName, price, img, size, types }) => {
 
   const cartItem = useSelector(cartItemByIdSelector(id));
   const addedCount = cartItem ? cartItem.count : 0;
-  const [typeActive, setTypeActive] = useState(null);
-  const [sizeActive, setSizeActive] = useState(null);
+  const [typeActive, setTypeActive] = useState<number>(0);
+  const [sizeActive, setSizeActive] = useState<number>(0);
 
   const onClickAdd = () => {
     const item = {
@@ -22,17 +31,17 @@ const PizzaCard = ({ id, pizzaName, price, img, size, types }) => {
       pizzaName,
       price,
       img,
-      type: typeNames[typeActive],
-      size: typeSizes[sizeActive],
+      type: typeNames[typeActive!],
+      size: typeSizes[sizeActive!],
     };
     dispatch(addProduct(item));
   };
 
-  const typeActiveHandler = (number) => {
+  const typeActiveHandler = (number:number) => {
     setTypeActive(() => number);
   };
 
-  const sizeActiveHandler = (number) => {
+  const sizeActiveHandler = (number:number) => {
     setSizeActive(() => number);
   };
 
@@ -42,7 +51,7 @@ const PizzaCard = ({ id, pizzaName, price, img, size, types }) => {
       <h4 className={styles.pizza_block__title}>{pizzaName}</h4>
       <div className={styles.pizza_block__selector}>
         <ul>
-          {types.map((number) => (
+          {types!.map((number) => (
             <li
               onClick={() => typeActiveHandler(number)}
               className={typeActive === number ? styles.active : ""}
@@ -53,7 +62,7 @@ const PizzaCard = ({ id, pizzaName, price, img, size, types }) => {
           ))}
         </ul>
         <ul>
-          {size.map((item, index) => (
+          {size!.map((item, index) => (
             <li
               onClick={() => sizeActiveHandler(index)}
               className={sizeActive === index ? styles.active : ""}

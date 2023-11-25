@@ -6,7 +6,18 @@ import {
   minusProduct,
 } from "../../redux/slices/cartSlice";
 
-const CartItem = ({
+export type CartItemProps = {
+  id:number,
+  pizzaName:string,
+  price:number,
+  img:string,
+  size?:number,
+  type?:string,
+  count:number,
+  resultPrice:number,
+}
+
+const CartItem:React.FC<CartItemProps> = ({
   id,
   pizzaName,
   price,
@@ -39,7 +50,6 @@ const CartItem = ({
   };
 
   const onClickRemoveProduct = () => {
-    const idItem = id;
     dispatch(removeProduct(id));
   };
 

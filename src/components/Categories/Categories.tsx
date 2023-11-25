@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React from "react";
 import styles from "./Categories.module.scss";
 import uniqId from "lodash.uniqueid";
 import { useSelector, useDispatch } from "react-redux";
 import { setCategoryId } from "../../redux/slices/optionsSlice";
 
-const Categories = () => {
-  const categoriesArr = [
+const Categories: React.FC = () => {
+  const categoriesArr:string[] = [
     "Все",
     "Мясные",
     "Вегетарианская",
